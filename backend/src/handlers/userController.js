@@ -1,11 +1,11 @@
+import dbConnection from './../models/db.js';
+import { hashPassword, comparePassword, createJWT} from './../modules/auth.js';
+
 export const registerUser = (req, res) => {
-  res.send("register user");
+  
 }
 export const loginUser = (req, res) => { 
 res.send("login user");
 }
 
-export const protectRoute = (req, res) => {
-    res.send("protected route")
-}
 
