@@ -4,7 +4,7 @@ import express from "express";
 import userRouter from "./routes/userRoute.js";
 import dbConnection from "./models/db.js";
 const app = express();
-const port =5500;
+const port = 5500;
 
 app.use(cors()), app.use(morgan("dev"));
 app.use(express.json());
@@ -24,13 +24,11 @@ const start = async () => {
     const result = await dbConnection.execute("select 'test' ");
     console.log("Database connected successfully:😊", result);
 
-   await app.listen(port, () => {
-        console.log(`server is running on http://localhost:${port}😜`);
+      app.listen(port, () => {
+      console.log(`server is running on http://localhost:${port}😜`);
     });
-    
   } catch (error) {
     console.error("Error connecting to the database:", error.message);
   }
 };
 start();
-
