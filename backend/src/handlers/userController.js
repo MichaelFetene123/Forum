@@ -19,14 +19,15 @@ export const registerUser = async (req, res) => {
             return res.status(400).json({ message: "password must be at least 8 characters " });
         }
 
-    const hashedPassword = await hashPassword(password);
+      const hashedPassword = await hashPassword(password);
+      
     const [user] = await dbConnection.query(
       "INSERT INTO users (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)",
       [username, firstname, lastname, email, hashedPassword]
     );
 
-    
-        return res.status(201).json({ message: "successfully created" });
+      //  todo : create a token
+      
         
   } catch (e) {
     console.log(e.message);
@@ -35,4 +36,8 @@ export const registerUser = async (req, res) => {
       .json({ message: "something went wrong please try again later!" });
   }
 };
-export const loginUser = (req, res) => {};
+
+
+export const loginUser = (req, res) => {
+  
+};
