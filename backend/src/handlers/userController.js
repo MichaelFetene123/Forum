@@ -39,5 +39,17 @@ export const registerUser = async (req, res) => {
 
 
 export const loginUser = (req, res) => {
-  
+  const { email, password } = req.body
+  if (!email || !password) {
+    return res.status(400).json({ message: "Please, Enter all required fields " });
+  }
+  try {
+    
+  } catch (e) {
+     console.log(e.message);
+     return res
+       .status(500)
+       .json({ message: "something went wrong please try again later!" });
+  }
+
 };
