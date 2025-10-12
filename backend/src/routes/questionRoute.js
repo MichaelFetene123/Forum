@@ -1,5 +1,9 @@
 import { Router } from "express";
+import { getAllQuestions } from "./../handlers/questionController.js";
 
 const router = Router();
 
-export default questionRouter;
+router.get("/allQuestions",  getAllQuestions);
+
+
+export default router;

@@ -1,5 +1,4 @@
 import mysql from "mysql2";
-import dotenv from "dotenv/config";
 
 const dbConnection = mysql.createPool({
   user: process.env.DB_USER,

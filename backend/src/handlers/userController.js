@@ -30,7 +30,15 @@ export const registerUser = async (req, res) => {
       [username, firstname, lastname, email, hashedPassword]
     );
 
-    //  todo : create a token
+    // Fetch the new user's info from the database
+    const [rows] = await dbConnection.query(
+      "SELECT userid, username FROM users WHERE userid = ?",
+      [user.insertId]
+    );
+
+    const userPayload = { id: rows[0].userid, username: rows[0].username };
+    const token = createJWT(userPayload);
+    res.status(201).json({ token });
   } catch (e) {
     console.log(e.message);
     return res
@@ -52,7 +60,22 @@ export const loginUser = async (req, res) => {
       "SELECT username, userid, password from users WHERE  email = ?",
       [email]
     );
-    return res.status(200).json({ user: isUser });
+
+    if (isUser.length === 0) {
+      return res.status(400).json({ message: "invalid credential" });
+    }
+
+    const validUser = await comparePassword(password, isUser[0].password);
+
+    if (!validUser) {
+      return res.status(400).json({ message: "invalid credential" });
+    }
+    const userid = isUser[0].userid;
+    const username = isUser[0].username;
+    const token = createJWT({ id: userid, username: username });
+    res.status(200).json({ token });
+
+    // return res.status(200).json({ user: isUser });
   } catch (e) {
     console.log(e.message);
     return res
