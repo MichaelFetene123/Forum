@@ -7,28 +7,30 @@ export const registerUser = async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-    try {
+  try {
+    const [isUser] = await dbConnection.query(
+      "SELECT username, userid from users WHERE username = ? or email = ?",
+      [username, email]
+    );
 
-        const [isUser] = await dbConnection.query('SELECT username, userid from users WHERE username = ? or email = ?', [username, email])
+    if (isUser.length > 0) {
+      return res.status(400).json({ message: "user is already exist " });
+    }
 
-        if (isUser.length > 0) {
-            return res.status(400).json({message:"user is already exist "})
-        }
+    if (password.length < 8) {
+      return res
+        .status(400)
+        .json({ message: "password must be at least 8 characters " });
+    }
 
-        if (password.length < 8) {
-            return res.status(400).json({ message: "password must be at least 8 characters " });
-        }
+    const hashedPassword = await hashPassword(password);
 
-      const hashedPassword = await hashPassword(password);
-      
     const [user] = await dbConnection.query(
       "INSERT INTO users (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)",
       [username, firstname, lastname, email, hashedPassword]
     );
 
-      //  todo : create a token
-      
-        
+    //  todo : create a token
   } catch (e) {
     console.log(e.message);
     return res
@@ -37,19 +39,24 @@ export const registerUser = async (req, res) => {
   }
 };
 
-
-export const loginUser = (req, res) => {
-  const { email, password } = req.body
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ message: "Please, Enter all required fields " });
-  }
-  try {
-    
-  } catch (e) {
-     console.log(e.message);
-     return res
-       .status(500)
-       .json({ message: "something went wrong please try again later!" });
+    return res
+      .status(400)
+      .json({ message: "Please, Enter all required fields " });
   }
 
+  try {
+    const [isUser] = await dbConnection.query(
+      "SELECT username, userid, password from users WHERE  email = ?",
+      [email]
+    );
+    return res.status(200).json({ user: isUser });
+  } catch (e) {
+    console.log(e.message);
+    return res
+      .status(500)
+      .json({ message: "something went wrong please try again later!" });
+  }
 };
