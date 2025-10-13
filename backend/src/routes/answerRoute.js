@@ -1,6 +1,7 @@
-import { Router } from 'express';
+import { Router } from "express";
+import { createAnswer } from "../controllers/answerController.js";
 
 const router = Router();
 
-
-export default answerRouter;
+router.post('/answer', createAnswer)
+export default router;

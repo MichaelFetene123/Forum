@@ -5,6 +5,7 @@ import express from "express";
 import userRouter from "./routes/userRoute.js";
 import dbConnection from "./models/db.js";
 import questionRouter from "./routes/questionRoute.js";
+import answerRouter from "./routes/answerRoute.js";
 import { protectRoute } from "./modules/auth.js";
 
 const app = express();
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", protectRoute, questionRouter);
+app.use("/api", protectRoute, answerRouter);
 app.use("/user", userRouter);
 
 // app.use("/api", protectRoute, questionRouter, answerRouter);
