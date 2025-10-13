@@ -36,7 +36,7 @@ export const registerUser = async (req, res) => {
       [user.insertId]
     );
 
-    const userPayload = { id: rows[0].userid, username: rows[0].username };
+    const userPayload = { userid: rows[0].userid, username: rows[0].username };
     const token = createJWT(userPayload);
     res.status(201).json({ token });
   } catch (e) {

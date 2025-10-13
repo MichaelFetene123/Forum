@@ -30,3 +30,18 @@ export const createQuestion = async (req, res) => {
     });
   }
 };
+
+export const getAllQuestions = async (req, res) => {
+  
+  try {
+    const [allQuestions] = await dbConnection.execute('SELECT q.*, u.username FROM questions q JOIN users u ON q.userid = u.userid ')
+
+    res.status(200).json(allQuestions)
+
+  } catch (error) {
+     console.error("Error fetching questions:", error);
+     res.status(500).json({
+       message: "An unexpected error occurred.",
+     });
+  }
+};
