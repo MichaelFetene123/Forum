@@ -1,5 +1,5 @@
-import dbConnection from "./../models/db.js";
-import { hashPassword, comparePassword, createJWT } from "./../modules/auth.js";
+import dbConnection from "../models/db.js";
+import { hashPassword, comparePassword, createJWT } from "../modules/auth.js";
 
 export const registerUser = async (req, res) => {
   const { username, firstname, lastname, email, password } = req.body;
