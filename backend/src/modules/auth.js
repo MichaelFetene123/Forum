@@ -16,7 +16,7 @@ export const comparePassword = (password, hash) => {
 
 export const createJWT = (user) => {
   const token = jwt.sign(
-    { id: user.userid, username: user.username },
+    { userid: user.id, username: user.username },
     process.env.JWT_SECRET
   );
 
