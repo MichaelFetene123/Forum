@@ -2,10 +2,9 @@ import dbConnection from "./../models/db.js";
 import { randomUUID } from "crypto";
 
 export const createAnswer = async (req, res) => {
-    const { questionid, answer } = req.body;
-    
-  const userid = req.user.userid;
+  const { questionid, answer } = req.body;
 
+  const userid = req.user.userid;
 
   let connection;
 
@@ -40,5 +39,43 @@ export const createAnswer = async (req, res) => {
     if (connection) {
       connection.release();
     }
+  }
+};
+
+export const getAnswers = async (req, res) => {
+  const question_id = req.params.question_id;
+
+  if (!question_id) {
+    return res.status(400).json({ message: "invalid question id" });
+  }
+
+  try {
+    const [question] = await dbConnection.query(
+      "SELECT questionid FROM questions WHERE questionid = ?",
+      [question_id]
+    );
+
+    if (question.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "the requested question could not be found" });
+    }
+
+    const [answers] = await dbConnection.query(
+      "SELECT a.answer AS content, a.answerid AS answer_id, a.userid, u.username AS user_name FROM answers a JOIN users u  ON a.userid = u.userid WHERE a.questionid ",
+      [question_id]
+    );
+    res.status(200).json({
+      answers: answers.map((a) => ({
+        content: a.content,
+        answer_id: a.answer_id,
+        user_name: a.user_name,
+      })),
+    });
+  } catch (error) {
+    console.log("Error fetching answers:", error.message);
+    res.status(500).json({
+      message: "An unexpected error occurred.",
+    });
   }
 };
