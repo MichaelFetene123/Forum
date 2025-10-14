@@ -2,8 +2,10 @@ import dbConnection from "./../models/db.js";
 import { randomUUID } from "crypto";
 
 export const createAnswer = async (req, res) => {
-  const { questionid, answer } = req.body;
+    const { questionid, answer } = req.body;
+    
   const userid = req.user.userid;
+
 
   let connection;
 
@@ -17,17 +19,20 @@ export const createAnswer = async (req, res) => {
 
     if (questionRows.length === 0) {
       connection.release();
-      res.status(400).json({ message: "invalid question id" });
+      return res.status(400).json({ message: "invalid question id" });
     }
 
-    const insertAnswer = await connection.execute(
+    const [insertAnswer] = await connection.execute(
       "INSERT INTO answers (answer, questionid, userid) VALUES (?, ?, ?)",
       [answer, questionid, userid]
     );
     connection.release();
 
-    return res.status(201).json({ message: "Answer posted successfully" });
-  } catch {
+    return res
+      .status(201)
+      .json({ message: "Answer posted successfully", insertAnswer });
+  } catch (error) {
+    console.log("Error creating answer:", error);
     return res
       .status(500)
       .json({ message: "internal server problem while creating an answer " });
