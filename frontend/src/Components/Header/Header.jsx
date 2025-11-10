@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import {Link, useNavigate } from "react-router-dom";
+import evangadilogo from '../../assets/evangadiLogo.png'
 
 const Header = ({logout=()=>{}}) => {
 
@@ -34,8 +35,24 @@ const Header = ({logout=()=>{}}) => {
      }
   return (<>
   <header className={`header ${sticky ? 'sticky' : ''}`}>
-<div>
-Hello Header
+<div className='nav-container'>
+<Link to={token ? "/" : "/login"}  className="logo">
+ <img src={evangadilogo} alt="evangadi logo" />
+</Link>
+<nav className='nav-links'>
+
+    <Link to={token ? "/" : "/login"} className='links'>
+        Home
+    </Link>
+
+    <Link to="how-it-works" className='links'>
+        How it Works
+    </Link>
+<button className='nav-btn btn-blue' onClick={onClickChange}>
+    {token ? "Log Out" : "Sign In"}
+</button>
+
+</nav>
 </div>
   </header>
   </>
