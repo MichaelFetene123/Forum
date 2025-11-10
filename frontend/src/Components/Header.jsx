@@ -33,9 +33,9 @@ const Header = ({logout=()=>{}}) => {
         navigate('/login')
      }
   return (<>
-  <header className>
+  <header className={`header ${sticky ? 'sticky' : ''}`}>
 <div>
-
+Hello Header
 </div>
   </header>
   </>
