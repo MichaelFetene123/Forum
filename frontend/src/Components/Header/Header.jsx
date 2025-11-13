@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import {Link, useNavigate } from "react-router-dom";
 import evangadilogo from '../../assets/evangadiLogo.png'
+import './Header.css';
 
 const Header = ({logout=()=>{}}) => {
 
@@ -34,7 +35,7 @@ const Header = ({logout=()=>{}}) => {
         navigate('/login')
      }
   return (<>
-  <header className={`header ${sticky ? 'sticky' : ''}`}>
+  <header className={`header ${sticky ? 'sticky' : ''} `}>
 <div className='nav-container'>
 <Link to={token ? "/" : "/login"}  className="logo">
  <img src={evangadilogo} alt="evangadi logo" />
