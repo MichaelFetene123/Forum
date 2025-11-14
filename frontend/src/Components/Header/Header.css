@@ -9,7 +9,7 @@ header.sticky {
 }
 
 .nav-container {
-    @apply flex justify-between items-center w-[80%] max-w-[1200px];
+    @apply flex flex-col md:flex-row justify-between items-center w-[80%] max-w-[1200px];
 }
 
 .logo img {
@@ -23,4 +23,8 @@ header.sticky {
 
 .links{
     @apply no-underline text-[#333] font-bold transition-colors duration-300 ease-in-out hover:text-[#fe8402];
+}
+
+.nav-btn{
+    @apply bg-blue-500 w-[150px] font-bold border-none p-2.5 cursor-pointer transition-colors duration-300 ease-in-out text-white hover:bg-orange-500 rounded-[5px] text-center mb-0;
 }
