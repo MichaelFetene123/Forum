@@ -9,7 +9,7 @@ header.sticky {
 }
 
 .nav-container {
-    @apply flex flex-col md:flex-row justify-between items-center w-[80%] max-w-[1200px];
+    @apply flex flex-col md:flex-row justify-between items-center w-[80%] max-w-[1200px] text-center;
 }
 
 .logo img {
@@ -17,14 +17,15 @@ header.sticky {
 }
 
 .nav-links{
-    @apply flex items-center gap-2.5 tracking-tighter;
+    @apply flex flex-col md:flex-row w-full items-center justify-between pl-3 gap-2.5 tracking-tighter;
 
 }
 
 .links{
-    @apply no-underline text-[#333] font-bold transition-colors duration-300 ease-in-out hover:text-[#fe8402];
+    @apply no-underline text-[#333] font-bold transition-colors duration-300 ease-in-out hover:text-[#fe8402] first:hidden md:first:inline-block;
 }
 
 .nav-btn{
-    @apply bg-blue-500 w-[150px] font-bold border-none p-2.5 cursor-pointer transition-colors duration-300 ease-in-out text-white hover:bg-orange-500 rounded-[5px] text-center mb-0;
+    @apply bg-blue-500 w-[150px] font-bold border-none p-2.5 cursor-pointer transition-colors duration-300 ease-in-out text-white hover:bg-orange-500 rounded-[5px] text-center mb-0 max-w-[200px]  ;
 }
+
