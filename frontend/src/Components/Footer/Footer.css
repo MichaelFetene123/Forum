@@ -1,2 +1,33 @@
 @import "tailwindcss";
 
+.main-footer{
+    @apply bg-[#2c3e50] text-white py-[30px] font-sans;
+}
+
+.footer-container{
+    @apply max-w-[1200px] mx-auto px-[20px] flex flex-col md:flex-row items-center justify-between md:justify-around text-left;;  
+}
+
+.log img {
+    @apply w-[180px] h-[40px] mr-[10px] pb-[20px] text-start;
+}
+.footer-icons {
+    @apply flex pl-6 gap-4 m-0 mb-5 text-[25px] md:text-[35px] ;
+}
+.footer-icons svg:hover {
+    @apply text-transparent;
+}
+
+.footer-section{
+    @apply mx-4 md:my-2.5 md:mx-0;
+} 
+.footer-section h3{
+    @apply text-xl font-bold mb-2.5 text-[#ecf0f1]
+}
+
+.footer-section ul{
+    @apply list-none p-0 text-left;
+}
+.footer-section ul li{
+    @apply my-1.5 text-xs text-gray-200/80 hover:text-white cursor-pointer hover:underline;
+}
