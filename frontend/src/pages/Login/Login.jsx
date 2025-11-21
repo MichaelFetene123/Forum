@@ -18,13 +18,15 @@ const navigate = useNavigate();
       return;
     }
     try {
-       await axios.post("/user/login", {
+     const {data} =  await axios.post("/user/login", {
         email: emailValue,
         password: passwordValue,
       });
 
-      alert("Login Successfully");
-      navigate("/");
+      alert("Login Successfully"); 
+      localStorage.setItem('token', data.token)
+      // navigate("/");
+      console.log(data)
     } catch (error) {
       alert(error?.response?.data?.message || error.message);
       console.log("Error details:", error.response?.data || error.message);

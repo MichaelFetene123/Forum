@@ -71,7 +71,7 @@ export const loginUser = async (req, res) => {
     const userid = isUser[0].userid;
     const username = isUser[0].username;
     const token = createJWT({ userid, username });
-    res.status(200).json({ token });
+    res.status(200).json({ token, username });
 
     // return res.status(200).json({ user: isUser });
   } catch (e) {
