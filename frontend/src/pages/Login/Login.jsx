@@ -1,9 +1,10 @@
 import styles from './Login.module.css'
 import { useRef } from 'react';
 import axios from "../../axiosConfig.js"
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
+const navigate = useNavigate();
   const emailDom = useRef(null);
   const passwordDom = useRef(null);
 
@@ -22,10 +23,10 @@ const Login = () => {
         password: passwordValue,
       });
 
-      alert("Registration successful, please login");
-      navigate("/Home");
+      alert("Login Successfully");
+      navigate("/");
     } catch (error) {
-      alert("somthing went wrong");
+      alert(error?.response?.data?.message || error.message);
       console.log("Error details:", error.response?.data || error.message);
     }
   };
@@ -41,7 +42,7 @@ const Login = () => {
           <span>Password :-- </span>
           <input ref={passwordDom} type="password" placeholder="password" />
         </div>
-        <button type="submit">Registor</button>
+        <button type="submit">Login</button>
       </form>
     </section>
   );
