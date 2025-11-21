@@ -1,8 +1,11 @@
 import React, { useRef } from "react";
 import styles from "./Registor.module.css";
 import axios from "../../axiosConfig.js";
+import { useNavigate } from "react-router-dom";
 
 const Registor = () => {
+  const navigate = useNavigate();
+
   const usernameDom = useRef(null);
   const firstnameDom = useRef(null);
   const lastnameDom = useRef(null);
@@ -11,27 +14,36 @@ const Registor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const username = usernameDom.current.value;
-    const firstname = firstnameDom.current.value;
-    const lastname = lastnameDom.current.value;
-    const email = emailDom.current.value;
-    const password = passwordDom.current.value;
+    const usernameValue = usernameDom.current.value;
+    const firstnameValue = firstnameDom.current.value;
+    const lastnameValue = lastnameDom.current.value;
+    const emailValue = emailDom.current.value;
+    const passwordValue = passwordDom.current.value;
 
-    if(!username || !firstname || !lastname || !email || !password){
+    if (
+      !usernameValue ||
+      !firstnameValue ||
+      !lastnameValue ||
+      !emailValue ||
+      !passwordValue
+    ) {
       alert("Please fill in all fields");
       return;
     }
 
     try {
       const response = await axios.post("/user/register", {
-        username: usernameDom.current.value.trim(),
-        firstname: firstnameDom.current.value.trim(),
-        lastname: lastnameDom.current.value.trim(),
-        email: emailDom.current.value.trim(),
-        password: passwordDom.current.value.trim(),
+        username: usernameValue,
+        firstname: firstnameValue,
+        lastname: lastnameValue,
+        email: emailValue,
+        password: passwordValue,
       });
-      console.log("Registration successful:");
+
+      alert("Registration successful, please login");
+      navigate("/login");
     } catch (error) {
+      alert("somthing went wrong")
       console.log("Error details:", error.response?.data || error.message);
     }
   };
