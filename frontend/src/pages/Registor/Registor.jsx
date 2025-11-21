@@ -32,7 +32,7 @@ const Registor = () => {
     }
 
     try {
-      const response = await axios.post("/user/register", {
+       await axios.post("/user/register", {
         username: usernameValue,
         firstname: firstnameValue,
         lastname: lastnameValue,
