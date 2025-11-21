@@ -1,26 +1,40 @@
-import React,{useRef} from 'react'
-import styles from './Registor.module.css'
-import axios from 'axios'
+import React, { useRef } from "react";
+import styles from "./Registor.module.css";
+import axios from "../../axiosConfig.js";
 
 const Registor = () => {
-  
-
-
-  const usernameDom = useRef(null)
-  const firstnameDom = useRef(null)
-  const lastnameDom = useRef(null)
-  const emailDom = useRef(null)
-  const passwordDom = useRef(null)
-
+  const usernameDom = useRef(null);
+  const firstnameDom = useRef(null);
+  const lastnameDom = useRef(null);
+  const emailDom = useRef(null);
+  const passwordDom = useRef(null);
 
   const handleSubmit = async (e) => {
-e.preventDefault();
-try {
-  axios.post
-} catch (error) {
-  
-}
-  }
+    e.preventDefault();
+    const username = usernameDom.current.value;
+    const firstname = firstnameDom.current.value;
+    const lastname = lastnameDom.current.value;
+    const email = emailDom.current.value;
+    const password = passwordDom.current.value;
+
+    if(!username || !firstname || !lastname || !email || !password){
+      alert("Please fill in all fields");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/user/register", {
+        username: usernameDom.current.value.trim(),
+        firstname: firstnameDom.current.value.trim(),
+        lastname: lastnameDom.current.value.trim(),
+        email: emailDom.current.value.trim(),
+        password: passwordDom.current.value.trim(),
+      });
+      console.log("Registration successful:");
+    } catch (error) {
+      console.log("Error details:", error.response?.data || error.message);
+    }
+  };
   return (
     <section>
       <form onSubmit={handleSubmit}>
@@ -52,6 +66,6 @@ try {
       </form>
     </section>
   );
-}
+};
 
-export default Registor
+export default Registor;
