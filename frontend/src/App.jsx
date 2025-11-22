@@ -35,10 +35,15 @@ setUser(data)
     checkUser();
   }, [])
   
-
+const logout = () =>{
+  setUser({})
+  localStorage.removeItem("token")
+  navigate("/login");
+}
   return (
     <div>
       <AppState.Provider value={{ user, setUser }}>
+          <Header/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

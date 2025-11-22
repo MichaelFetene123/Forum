@@ -26,7 +26,7 @@ const navigate = useNavigate();
       alert("Login Successfully"); 
       
       localStorage.setItem('token', data.token)
-      // navigate("/");
+      navigate("/");
       console.log(data)
     } catch (error) {
       alert(error?.response?.data?.message || error.message);
