@@ -24,6 +24,7 @@ const navigate = useNavigate();
       });
 
       alert("Login Successfully"); 
+      
       localStorage.setItem('token', data.token)
       // navigate("/");
       console.log(data)
