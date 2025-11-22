@@ -7,6 +7,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Registor from './pages/Registor/Registor';
 import axios from './axiosConfig.js';
+import Landing from './Components/Landing/Landing.jsx';
 
 
 export const AppState = createContext();
@@ -36,18 +37,38 @@ setUser(data)
   }, [])
   
 const logout = () =>{
-  setUser({})
+  setUser(null)
   localStorage.removeItem("token")
   navigate("/login");
 }
   return (
     <div>
       <AppState.Provider value={{ user, setUser }}>
-          <Header/>
+        <Header logout={logout} />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Registor />} />
+          <Route
+            path="/"
+            index
+            element={<Home />}
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                <Landing />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <>
+                <Landing />
+                <Footer />
+              </>
+            }
+          />
         </Routes>
       </AppState.Provider>
     </div>

@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+.landingContainer {
+    @apply flex flex-col md:flex-row h-auto md:h-screen items-center justify-center bg-[#f5f5f5] px-[10%] bg-center bg-cover bg-no-repeat bg-fixed;
+    background-image: url("../../assets/evaBg.svg");
+}
+
+.authContainer{
+@apply relative w-1/2 h-[500px] overflow-hidden
+}
+
+.authSlide{
+    @apply flex w-[200%] h-full transition-transform duration-600 ease-in-out;
+}
+
+.authContent{
+    @apply w-full flex  items-center justify-center flex-col
+}
+
+.showLogin{
+    @apply transform translate-x-0;
+}
+
+.showRegister{
+    @apply transform -translate-x-1/2;
+}
+
+.aboutContainer{
+    @apply w-full  p-5 flex flex-col justify-center
+}
+
