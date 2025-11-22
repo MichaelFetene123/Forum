@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState, createContext} from 'react';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import About from './Components/About/about';
@@ -7,7 +7,14 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Registor from './pages/Registor/Registor';
 import axios from './axiosConfig.js';
+
+
+export const AppState = createContext();
+
 function App() {
+
+  const [user, setUser] = useState({});
+
   const token = localStorage.getItem('token');
  const navigate = useNavigate()
 const checkUser = async () =>{
@@ -17,7 +24,7 @@ const checkUser = async () =>{
         Authorization: "Bearer " + token,
      },
    });
-console.log(data)
+setUser(data)
   } catch (error) {
     console.log(error.response)
     navigate("/login");
@@ -31,11 +38,13 @@ console.log(data)
 
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/Registor" element={<Registor />} />
-      </Routes>
+      <AppState.Provider value={{ user, setUser }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Registor />} />
+        </Routes>
+      </AppState.Provider>
     </div>
   );
 }

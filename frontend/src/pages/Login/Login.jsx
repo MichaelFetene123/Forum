@@ -1,7 +1,7 @@
 import styles from './Login.module.css'
 import { useRef } from 'react';
 import axios from "../../axiosConfig.js"
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 const navigate = useNavigate();
@@ -47,6 +47,7 @@ const navigate = useNavigate();
         </div>
         <button type="submit">Login</button>
       </form>
+      <Link to={"/register"}>Don't have an account? Register</Link>
     </section>
   );
 }

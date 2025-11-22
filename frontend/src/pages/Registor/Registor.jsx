@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import styles from "./Registor.module.css";
 import axios from "../../axiosConfig.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Registor = () => {
   const navigate = useNavigate();
@@ -76,6 +76,7 @@ const Registor = () => {
         </div>
         <button type="submit">Registor</button>
       </form>
+      <Link to={"/login"}>Already have an account? Login</Link>
     </section>
   );
 };
