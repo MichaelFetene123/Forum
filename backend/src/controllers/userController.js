@@ -81,3 +81,13 @@ export const loginUser = async (req, res) => {
       .json({ message: "something went wrong please try again later!" });
   }
 };
+
+export async function checkUser(req, res) {
+  const username = req.user.username;
+  const userid = req.user.userid;
+  res.status(200).json({
+    msg: "valid user",
+    username,
+    userid,
+  });
+}
