@@ -27,7 +27,7 @@ const Header = ({logout=()=>{}}) => {
             navigate("/login")
         }
         if(!token){
-            navigate("/register")
+            navigate("/login")
         }
      }
 

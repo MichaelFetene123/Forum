@@ -1,9 +1,13 @@
-import React, { useRef } from "react";
-import styles from "./Registor.module.css";
+import React, { useRef, useState } from "react";
+import classes from "./Registor.module.css";
 import axios from "../../axiosConfig.js";
 import { Link, useNavigate } from "react-router-dom";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";;
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-const Registor = () => {
+const Registor = ({ onToggle }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const usernameDom = useRef(null);
@@ -27,12 +31,12 @@ const Registor = () => {
       !emailValue ||
       !passwordValue
     ) {
-      alert("Please fill in all fields");
+      setErrorMessage("Please provide all required information");
       return;
     }
 
     try {
-       await axios.post("/user/register", {
+      await axios.post("/user/register", {
         username: usernameValue,
         firstname: firstnameValue,
         lastname: lastnameValue,
@@ -41,42 +45,108 @@ const Registor = () => {
       });
 
       alert("Registration successful, please login");
-      navigate("/login");
+      onToggle(); // Switch to login form instead of navigating away
     } catch (error) {
-      alert("somthing went wrong")
+      setErrorMessage(error?.response?.data?.msg || "Something went wrong!");
+      alert("somthing went wrong");
       console.log("Error details:", error.response?.data || error.message);
     }
   };
+
   return (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <span>username :-- </span>
-          <input ref={usernameDom} type="text" placeholder="username" />
+    <section className={classes.container}>
+      <h2 className={classes.title}>Join the network</h2>
+      <p className={classes.text}>
+        Already have an account?{" "}
+        <span
+          onClick={onToggle}
+          className={classes.link}
+          style={{ cursor: "pointer" }}
+        >
+          Sign in
+        </span>
+      </p>
+      <form onSubmit={handleSubmit} className={classes.form_container}>
+        <div className={classes.input_group}>
+          <input
+            ref={usernameDom}
+            type="text"
+            placeholder="User Name"
+            required
+          />
         </div>
-        <br />
-        <div>
-          <span>First Name :-- </span>
-          <input ref={firstnameDom} type="text" placeholder="first name" />
+
+        <div className={classes.input_name_container}>
+          <div className={classes.input_group}>
+            <input
+              ref={firstnameDom}
+              type="text"
+              placeholder="First Name"
+              required
+            />
+          </div>
+
+          <div className={classes.input_group}>
+            <input
+              ref={lastnameDom}
+              type="text"
+              placeholder="Last Name"
+              required
+            />
+          </div>
         </div>
-        <br />
-        <div>
-          <span>Last Name :-- </span>
-          <input ref={lastnameDom} type="text" placeholder="last name" />
+
+        <div className={classes.input_group}>
+          <input ref={emailDom} type="email" placeholder="Email" required />
         </div>
-        <br />
-        <div>
-          <span>email :-- </span>
-          <input ref={emailDom} type="email" placeholder="email" />
+
+        <div className={classes.input_group} style={{ position: "relative" }}>
+          <input
+            ref={passwordDom}
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            required
+          />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "10px",
+              cursor: "pointer",
+              paddingTop: "8px",
+            }}
+          >
+            {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          </span>
         </div>
-        <br />
-        <div>
-          <span>Password :-- </span>
-          <input ref={passwordDom} type="password" placeholder="password" />
-        </div>
-        <button type="submit">Registor</button>
+        {errorMessage && (
+          <p style={{ color: "red", paddingTop: "5px" }}>{errorMessage}</p>
+        )}
+        <button type="submit" className={classes.btn}>
+          Agree and Join
+        </button>
+
+        <p className={classes.form_footer}>
+          I agree to the{" "}
+          <a href="#" className={classes.links}>
+            privacy policy
+          </a>{" "}
+          and{" "}
+          <a href="#" className={classes.links}>
+            terms of service
+          </a>
+          .
+        </p>
+        <p>
+          <span
+            onClick={onToggle}
+            className={classes.link}
+            style={{ cursor: "pointer" }}
+          >
+            Already have an account?
+          </span>
+        </p>
       </form>
-      <Link to={"/login"}>Already have an account? Login</Link>
     </section>
   );
 };
