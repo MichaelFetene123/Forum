@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .container{
-@apply w-1/2 font-sans p-5 my-0 mx-auto h-full
+@apply w-1/2 font-sans p-5 my-0 mx-auto h-auto
 }
 
 span h1 {
