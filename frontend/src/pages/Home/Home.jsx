@@ -2,7 +2,7 @@ import React,{useContext} from 'react'
 import { AppState } from '../../App'
 const Home = () => {
   const { user, setUser } = useContext(AppState);
-  console.log(user.username);
+  // console.log(user.username);
   return (
     <div>
       {" "}
