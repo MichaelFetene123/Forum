@@ -5,6 +5,7 @@ import QuestionCard from "./QuestionCard";
 import axios from "../../axiosConfig.js";
 import Fuse from "fuse.js";
 import ReactPaginate from "react-paginate";
+import Four04 from "../Four04/Four04.jsx";
 
 const Home = () => {
   const token = localStorage.getItem("token");
@@ -97,6 +98,7 @@ const Home = () => {
           />
         </div>
       </div>
+
       <hr className="my-6 border-gray-200" />
       {filteredQuestions.length === 0 ? (
         <p className="text-center text-gray-500">
