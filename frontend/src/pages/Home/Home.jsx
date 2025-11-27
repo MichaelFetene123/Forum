@@ -78,16 +78,16 @@ const Home = () => {
   };
 
   return (
-    <div className="container">
-      <div className="flex justify-between m-10 mt-0">
+    <div className="container mb-10">
+      <div className="flex justify-between m-10 mt-0 space-x-4 md:space-x-0">
         <Link
-          to="/ask-question"
+          to="/question"
           className="border-none bg-blue-500 hover:bg-orange-500 pt-2 px-4 rounded-xl text-white"
         >
-          Ask Question
+          Ask <span className="hidden md:inline"> Question</span>
         </Link>
         <div>Welcome: {user?.username}</div>
-        <div className="w-full max-w-sm">
+        <div className="w-40 sm:w-56 md:w-full md:max-w-sm">
           <input
             type="text"
             placeholder="Search"
@@ -104,7 +104,7 @@ const Home = () => {
         </p>
       ) : (
         <>
-          <div className="space-y-3">
+          <div className="space-y-3 ">
             {paginatedQuestions.map(renderQuestion)}
           </div>
           {pageCount > 1 && (
