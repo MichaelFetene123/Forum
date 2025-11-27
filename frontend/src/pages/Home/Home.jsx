@@ -4,6 +4,7 @@ import { AppState } from "../../App";
 import QuestionCard from "./QuestionCard";
 import axios from "../../axiosConfig.js";
 import Fuse from "fuse.js";
+import ReactPaginate from "react-paginate";
 
 const Home = () => {
   const token = localStorage.getItem("token");
@@ -34,14 +35,6 @@ const Home = () => {
     }
   }, [token]);
 
-  const offset = currentPage * questionsPerPage;
-  const paginatedQuestions = qdata.slice(offset, offset + questionsPerPage);
-  const pageCount = Math.ceil(qdata.length / questionsPerPage);
-
-  const handlePageChange = ({ page }) => {
-    setCurrentPage(page);
-  };
-
   const filteredQuestions = useMemo(() => {
     const query = searchQuery.trim();
     if (!query) return qdata;
@@ -55,6 +48,34 @@ const Home = () => {
     const fuse = new Fuse(qdata, options);
     return fuse.search(searchQuery).map((result) => result.item);
   }, [qdata, searchQuery]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [searchQuery]);
+
+  const offset = currentPage * questionsPerPage;
+  const paginatedQuestions = filteredQuestions.slice(
+    offset,
+    offset + questionsPerPage
+  );
+  const pageCount = Math.ceil(filteredQuestions.length / questionsPerPage);
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const renderQuestion = (question) => {
+    const questionKey = question.questionid ?? question.id;
+    return (
+      <QuestionCard
+        key={questionKey}
+        questionid={questionKey}
+        title={question.title}
+        askedby={question.username}
+        qdesc={question.description}
+      />
+    );
+  };
 
   return (
     <div className="container">
@@ -76,19 +97,39 @@ const Home = () => {
           />
         </div>
       </div>
-      <hr className="my-4" />
+      <hr className="my-6 border-gray-200" />
       {filteredQuestions.length === 0 ? (
-        <p className="text-center text-gray-500">No questions found.</p>
+        <p className="text-center text-gray-500">
+          No questions found. Try a different search term.
+        </p>
       ) : (
-        filteredQuestions.map((question) => (
-          <QuestionCard
-            key={question.questionid ?? question.id}
-            questionid={question.questionid ?? question.id}
-            title={question.title}
-            askedby={question.askedby || question.username}
-            qdesc={question.qdesc}
-          />
-        ))
+        <>
+          <div className="space-y-3">
+            {paginatedQuestions.map(renderQuestion)}
+          </div>
+          {pageCount > 1 && (
+            <ReactPaginate
+              previousLabel="Prev"
+              nextLabel="Next"
+              breakLabel="..."
+              pageCount={pageCount}
+              marginPagesDisplayed={1}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageChange}
+              containerClassName="mt-6 flex items-center justify-center gap-2 text-sm"
+              pageClassName="px-3 py-1 rounded-md border border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-200 transition"
+              pageLinkClassName="w-full h-full inline-block text-center"
+              previousClassName="px-3 py-1 rounded-md border border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-200 transition"
+              previousLinkClassName="w-full h-full inline-block text-center"
+              nextClassName="px-3 py-1 rounded-md border border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-200 transition"
+              nextLinkClassName="w-full h-full inline-block text-center"
+              breakClassName="px-3 py-1 text-gray-400"
+              activeClassName="!bg-blue-500 !text-white !border-blue-500"
+              disabledClassName="opacity-40 cursor-not-allowed"
+              renderOnZeroPageCount={null}
+            />
+          )}
+        </>
       )}
     </div>
   );

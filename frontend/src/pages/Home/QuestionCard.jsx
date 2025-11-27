@@ -42,7 +42,7 @@ const QuestionCard = ({ title, askedby, qdesc, questionid }) => {
           </Link>
         </div>
         <Link
-          to={`/answer/get-answer/${questionid}`}
+          to={`/answer/${questionid}`}
           style={{ textDecoration: "none", color: "black" }}
         >
           <div className=" pr-10">
