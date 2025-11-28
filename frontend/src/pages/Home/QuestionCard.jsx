@@ -34,6 +34,7 @@ const QuestionCard = ({ title, askedby, qdesc, questionid }) => {
           </div>
           <Link
             to={`answer/${questionid}`}
+            state={{ title, askedby, qdesc }}
             style={{ textDecoration: "none", color: "black" }}
           >
             <div className="p-4 flex justify-center items-center mt-4">
@@ -50,7 +51,6 @@ const QuestionCard = ({ title, askedby, qdesc, questionid }) => {
           </div>
         </Link>
       </div>
-     
     </>
   );
 };

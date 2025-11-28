@@ -9,6 +9,7 @@ import Registor from "./pages/Registor/Registor";
 import axios from "./axiosConfig.js";
 import Landing from "./Components/Landing/Landing.jsx";
 import Question from "./pages/Question/Question.jsx";
+import Answer from "./pages/Answer/Answer.jsx";
 
 export const AppState = createContext();
 
@@ -64,7 +65,8 @@ function App() {
               </>
             }
           />
-          <Route path="ask_question" element={<Question/>}/>
+          <Route path="ask_question" element={<Question />} />
+          <Route path="/answer/:questionid" element={<Answer />} />
         </Routes>
       </AppState.Provider>
     </div>

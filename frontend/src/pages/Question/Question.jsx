@@ -28,6 +28,7 @@ const Question = () => {
           },
         }
       );
+    console.log("Response status:", response);
       setTitle("");
       setDescription("");
       setTag("");
