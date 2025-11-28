@@ -82,7 +82,7 @@ const Home = () => {
     <div className="container mb-10">
       <div className="flex justify-between m-10 mt-0 space-x-4 md:space-x-0">
         <Link
-          to="/question"
+          to="/ask_question"
           className="border-none bg-blue-500 hover:bg-orange-500 pt-2 px-4 rounded-xl text-white"
         >
           Ask <span className="hidden md:inline"> Question</span>
@@ -98,7 +98,7 @@ const Home = () => {
           />
         </div>
       </div>
-
+      
       <hr className="my-6 border-gray-200" />
       {filteredQuestions.length === 0 ? (
         <p className="text-center text-gray-500">

@@ -11,7 +11,7 @@ const Four04 = () => {
         className="no-underline text-[1.2rem] text-blue-800 hover:text-black/80 px-5 rounded-sm   "
         to="/"
       >
-        Go back to Home >
+        Go back to Home &gt;
       </Link>
     </div>
   );
