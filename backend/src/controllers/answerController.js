@@ -62,7 +62,7 @@ export const getAnswers = async (req, res) => {
     }
 
     const [answers] = await dbConnection.query(
-      "SELECT a.answer AS content, a.answerid AS answer_id, a.userid, u.username AS user_name FROM answers a JOIN users u  ON a.userid = u.userid WHERE a.questionid ",
+      "SELECT a.answer AS content, a.answerid AS answer_id, a.userid, u.username AS user_name FROM answers a JOIN users u ON a.userid = u.userid WHERE a.questionid = ?",
       [question_id]
     );
     res.status(200).json({
